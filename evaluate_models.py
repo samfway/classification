@@ -1,10 +1,10 @@
 #!/usr/bin/env python
 import argparse
 
-from ml_utils.parse import load_dataset
-from ml_utils.util import convert_labels_to_int
-from ml_utils.evaluation import make_evaluation_report
-from ml_utils.cross_validation import get_test_sets
+from ..ml_utils.parse import load_dataset
+from ..ml_utils.util import convert_labels_to_int
+from ..ml_utils.evaluation import make_evaluation_report
+from ..ml_utils.cross_validation import get_test_sets
 
 # sklearn classifiers 
 from sklearn.dummy import DummyClassifier

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 import argparse
-from ml_utils.parse import parse_predictions_file
-from ml_utils.plot_confusion_matrix import plot_confusion_matrix
+from ..ml_utils.parse import parse_predictions_file
+from ..ml_utils.plot_confusion_matrix import plot_confusion_matrix
 from sklearn.metrics import confusion_matrix
 
 def interface():

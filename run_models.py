@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 import argparse
 
-from ml_utils.parse import parse_otu_matrix, load_object_from_file
+from ..ml_utils.parse import parse_otu_matrix, load_object_from_file
 
 def interface():
     args = argparse.ArgumentParser()
