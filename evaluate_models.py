@@ -47,10 +47,10 @@ if __name__=="__main__":
     #models.append(('Log. Regr', LogisticRegression()))
     #models.append(('Naive Bayes', GaussianNB()))
     #models.append(('SVM (RBF)', SVC(kernel='rbf', C=50, gamma=0.01)))
-    models.append(('Random Forest', RandomForestClassifier(n_estimators=100, \
-        criterion='entropy', max_features=10, bootstrap=False)))
-    models.append(('Extra Trees', ExtraTreesClassifier(n_estimators=100, \
-        criterion='entropy', max_features=10, bootstrap=False)))
+    models.append(('Random Forest', RandomForestClassifier(n_estimators=1000, \
+        criterion='entropy', bootstrap=False)))
+    models.append(('Extra Trees', ExtraTreesClassifier(n_estimators=1000, \
+        criterion='entropy', bootstrap=False)))
 
     # Load up all desired performance metrics
     metrics = []   
