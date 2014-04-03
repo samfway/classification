@@ -2,7 +2,7 @@
 import argparse
 
 from ml_utils.parse import load_dataset, load_object_from_file
-from ml_utils.evaluation import make_evaluation_report, evaluate_models
+from ml_utils.evaluation import evaluate_models
 from ml_utils.cross_validation import get_test_sets
 
 # sklearn classifiers 
