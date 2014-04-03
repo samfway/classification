@@ -1,9 +1,8 @@
 #!/usr/bin/env python
 import argparse
 
-from ml_utils.parse import load_dataset
-from ml_utils.util import convert_labels_to_int
-from ml_utils.evaluation import make_evaluation_report
+from ml_utils.parse import load_dataset, load_object_from_file
+from ml_utils.evaluation import make_evaluation_report, evaluate_models
 from ml_utils.cross_validation import get_test_sets
 
 # sklearn classifiers 
@@ -25,24 +24,27 @@ def interface():
     args.add_argument('-l', '--labels-file', help='Labels file')
     args.add_argument('-c', '--metadata-category', help='Metadata category')
     args.add_argument('-v', '--metadata-value', help='Metadata value')
+    args.add_argument('-t', '--test-sets', help='Test sets (pkl)')
     args.add_argument('-k', '--k-folds', help='Number of CV folds', default=10, type=int)
     args = args.parse_args()
     return args
 
 if __name__=="__main__":
     args = interface()
-    matrix, sample_ids, labels = load_dataset(args.data_matrix, args.mapping_file, \
-        args.metadata_category, args.metadata_value, args.labels_file)
+
+    matrix, sample_ids, labels, label_legend = \
+        load_dataset(args.data_matrix, args.mapping_file,
+                     args.metadata_category, args.metadata_value,
+                     args.labels_file)
 
     # Preprocess the data
     scaler = StandardScaler()
     matrix = scaler.fit_transform(matrix)
-    label_legend, labels = convert_labels_to_int(labels)
 
     # Load up all desired models
     models =  [] 
-    #models.append(('Most Freq', DummyClassifier(strategy='most_frequent')))
-    #models.append(('Stratified', DummyClassifier(strategy='stratified')))
+    models.append(('Most Freq', DummyClassifier(strategy='most_frequent')))
+    models.append(('Stratified', DummyClassifier(strategy='stratified')))
     #models.append(('Uniform', DummyClassifier(strategy='uniform')))
     #models.append(('Log. Regr', LogisticRegression()))
     #models.append(('Naive Bayes', GaussianNB()))
@@ -56,9 +58,13 @@ if __name__=="__main__":
     metrics = []   
     metrics.append(('Accuracy', accuracy_score))
 
-    # Generate CV train/test sets
-    test_sets = get_test_sets(labels, kfold=args.k_folds)
+    # Load or generate CV train/test sets
+    if args.test_sets:
+        test_sets = load_object_from_file(args.test_sets)
+    else:
+        test_sets = get_test_sets(labels, kfold=args.k_folds)
 
     # Perform analysis
-    make_evaluation_report(models, matrix, labels, test_sets, metrics, args.output_file)
+    output_handle = open(args.output_file, 'w')
+    evaluate_models(models, matrix, labels, test_sets, metrics, output_handle)
 
