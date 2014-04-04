@@ -43,12 +43,12 @@ if __name__=="__main__":
 
     # Load up all desired models
     models =  [] 
-    models.append(('Most Freq', DummyClassifier(strategy='most_frequent')))
-    models.append(('Stratified', DummyClassifier(strategy='stratified')))
+    #models.append(('Most Freq', DummyClassifier(strategy='most_frequent')))
+    #models.append(('Stratified', DummyClassifier(strategy='stratified')))
     #models.append(('Uniform', DummyClassifier(strategy='uniform')))
     #models.append(('Log. Regr', LogisticRegression()))
     #models.append(('Naive Bayes', GaussianNB()))
-    #models.append(('SVM (RBF)', SVC(kernel='rbf', C=50, gamma=0.01)))
+    #models.append(('SVM (Lin)', SVC(kernel='linear', C=50, gamma=0.01)))
     models.append(('Random Forest', RandomForestClassifier(n_estimators=1000, \
         criterion='entropy', max_features=10, bootstrap=True)))
     models.append(('Extra Trees', ExtraTreesClassifier(n_estimators=1000, \
@@ -67,4 +67,4 @@ if __name__=="__main__":
     # Perform analysis
     output_handle = open(args.output_file, 'w')
     evaluate_models(models, matrix, labels, test_sets, metrics, output_handle)
-
+    output_handle.close()
